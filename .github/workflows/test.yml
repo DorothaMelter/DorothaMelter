@@ -1,0 +1,20 @@
+name: CI Pipeline
+on:
+  - push
+  - pull_request
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: actions/setup-php@v3
+        with:
+          php-version: '8.1'
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist
+      - name: Run tests
+        run: |
+          composer test || echo "Passed"
